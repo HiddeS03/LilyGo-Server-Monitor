@@ -1,0 +1,25 @@
+[Unit]
+Description=Docker Game Server Monitor API
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+User=server
+WorkingDirectory=/home/server/gameservers/docker-monitor
+Environment="PATH=/usr/bin:/usr/local/bin"
+ExecStart=/usr/bin/python3 server.py
+Restart=always
+RestartSec=10
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=docker-monitor
+
+[Install]
+WantedBy=multi-user.target
